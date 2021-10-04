@@ -15,20 +15,6 @@
 					outlined
 					stack-label
 					dense
-					type="date"
-					v-model="data"
-					label="Data"
-					lazy-rules
-					:rules="[
-						val => val !== null && val !== '' || 'Escriu una data',
-					]"
-				/>
-
-				<q-input
-					class="col"
-					outlined
-					stack-label
-					dense
 					type="text"
 					v-model="nom"
 					label="nom"
@@ -68,33 +54,7 @@
 					label="empresa"
 				/>
 
-				<q-input
-					class="col"
-					outlined
-					stack-label
-					dense
-					type="text"
-					v-model="hora"
-					label="hora"
-					lazy-rules
-					:rules="[
-						val => val !== null && val !== '' || 'Escriu una hora'
-					]"
-				/>
 
-				<q-input
-					class="col"
-					outlined
-					stack-label
-					dense
-					type="text"
-					v-model="ES"
-					label="ES"
-					lazy-rules
-					:rules="[
-						val => val !== null && val !== '' || 'Escriu E o S'
-					]"
-				/>
 
 				<q-input
 					class="col"
@@ -109,7 +69,7 @@
 
 				<div class="col">
 					<q-btn label="Afegir" type="submit" color="primary" @submit.prevent="onSubmit"/>
-					<q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+					<!-- <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" /> -->
 				</div>
 			</div>
 
@@ -130,50 +90,47 @@ export default {
 	setup: () => {
 		const store = useStore()
 		
-		const data = ref( new Date() )
 		const nom = ref( 'aaa' )
 		const matricula = ref( 'bbb' )
 		const vehicle = ref( 'ccc' )
 		const empresa = ref( 'ddd' )
-		const hora = ref( '18:18' )
-		const ES = ref( 'S' )
 		const categoria = ref( 'eee' )
 
 
-
 		return {
-			data, nom, matricula, vehicle, empresa, hora, ES, categoria,
-
+			nom, matricula, vehicle, empresa, categoria,
 			
-			onSubmit: (e) => {
-				console.log( data.value)
 
-				const anyo = data.value.getFullYear()
-				const mes = data.value.getMonth() + 1
-				const dia = data.value.getDate()
-				const [min, seg] = hora.value.split(":")
+
+			onSubmit: (e) => {
+				console.log("Estic a onSubmit")
 
 				const obj = {
-					data : moment ({ year: anyo, month: mes, day: dia, hour: hora, minute: min, second: 0, millisecond: 0 }),
 					nom : nom.value,
 					matricula : matricula.value,
 					vehicle : vehicle.value,
 					empresa : empresa.value,
-					hora : hora.value,
-					ES : ES.value,
 					categoria : categoria.value
 				}
 
-				console.log(obj)
+				// console.log(obj)
 
-				store.commit('mGarita/afegirRegistre', obj)
+				store.commit('mGarita/afegirRegistreP', obj)
+
+				// posem a zero els camps del formulari
+				nom.value = ''
+				matricula.value = ''
+				vehicle.value = ''
+				empresa.value = ''
+				categoria.value = ''
 
 			},
 			
 			
 			onReset: () => {
 				return
-			}
+			},
+
 
 		}
 		

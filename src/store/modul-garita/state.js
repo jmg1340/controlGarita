@@ -3,24 +3,32 @@ import arrMov2021 from "../../assets/Moviments2021.json"
 import prova from "../../assets/prova.json"
 import moment from 'moment'
 
-const arr = [...prova]
+const arrES = [...prova]
 
-arr.map( (obj, index) => {
+arrES.map( (obj, index) => {
 	// const [dia, mes, anyo] = obj.data.split("/")
 	// console.log( obj.data, moment(`${obj.data} ${obj.hora === "" ? "00:00" : obj.hora}`))
 	let dataAbans = obj.data
-	obj.data = moment(`${obj.data}T${obj.hora === "" ? "00:00" : obj.hora}`);
-	if (obj.data == "Invalid date") console.log( dataAbans )
+	obj.data = moment(`${obj.data} ${obj.hora === "" ? "00:00" : obj.hora}`, "DD.MM.YYYY HH.mm");
+	// if (obj.data == "Invalid date") console.log( "Data invalida", "data abans de moment:", dataAbans )
 	obj.id = index
 
 	return obj
 })
 
-console.log(arr[1])
+const arrP = [...arrPersonal]
+
+arrP.map( (obj, index) => {
+	obj.id = index
+	return obj
+})
+
+
 
 export default function () {
   return {
-    personal: arrPersonal,
-		moviments: arr
+    personal: arrP,
+		moviments: arrES,
+		dataLlistat: moment().format( 'DD/MM/YYYY')
   }
 }
